@@ -1,0 +1,2 @@
+# pypi-versions
+Pythonパッケージのインストール可能バージョンを確認できるCLIツール
