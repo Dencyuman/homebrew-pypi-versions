@@ -2,8 +2,8 @@
 class PypiVersions < Formula
   desc "PyPI Versions is a CLI tool to fetch package versions from PyPI."
   homepage "https://github.com/Dencyuman/pypi-versions"
-  url "https://github.com/Dencyuman/pypi-versions/archive/refs/tags/v1.0.0.tar.gz"
-  sha256 "a7ecde589d3fe202bc6bc19ddaa6c0cde118ef2c4833aad5d61c8ea6e4ea605c"
+  url "https://github.com/Dencyuman/pypi-versions/archive/refs/tags/v1.1.0.tar.gz"
+  sha256 "0019dfc4b32d63c1392aa264aed2253c1e0c2fb09216f8e2cc269bbfb8bb49b5"
   license "MIT"
 
   depends_on "go" => :build
