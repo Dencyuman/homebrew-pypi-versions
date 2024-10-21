@@ -15,7 +15,7 @@ PyPI Versions (ppv) is a command-line interface (CLI) tool designed to interact 
 
 ## Installation
 ### Prerequisites
-- **Go**: Ensure you have Go installed (version 1.18 or higher). You can download it from here.
+- **Go**: Ensure you have Go installed (version 1.18 or higher).
 
 ### Install via go install
 ```bash
@@ -23,9 +23,6 @@ go install github.com/Dencyuman/pypi-versions@latest
 ```
 
 This command will install the ppv binary to your $GOPATH/bin. Make sure this directory is added to your system's PATH to access ppv from anywhere in your terminal.
-
-### Download Precompiled Binaries
-Alternatively, you can download precompiled binaries from the Releases page of the repository. After downloading, place the binary in a directory that's included in your system's PATH.
 
 ### Using Homebrew (macOS and Linux)
 If you are using Homebrew, you can install ppv with:
@@ -46,6 +43,7 @@ ppv [command] [flags] [arguments]
 - `--prerelease`, `-p`: Include pre-release versions in the output.
 - `--latest`, `-l`: Show only the latest stable version.
 - `--json`, `-j`: Output the results in JSON format.
+- `--help`, `-h`: Display help for specific commands.
 
 ### Commands
 `versions`
@@ -73,6 +71,13 @@ Display dependencies of specific versions of Python packages from PyPI.
 
 ```bash
 ppv deps [package] [version] ... [flags]
+```
+
+`help`
+Display overall help information.
+
+```bash
+ppv help
 ```
 
 ## Examples
