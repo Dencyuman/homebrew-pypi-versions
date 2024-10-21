@@ -6,7 +6,7 @@ set -e
 # 使用方法の表示
 usage() {
   echo "使用方法: $0 <バージョン>"
-  echo "例: $0 1.1.2"
+  echo "例: $0 1.1.6"
   exit 1
 }
 
@@ -37,7 +37,7 @@ if git rev-parse "$TAG" >/dev/null 2>&1; then
   exit 1
 fi
 
-# 1. ソースコードのダウンロード
+# 1. ソースアーカイブのダウンロード
 ARCHIVE_URL="https://github.com/${REPO_OWNER}/${REPO_NAME}/archive/refs/tags/${TAG}.tar.gz"
 ARCHIVE_NAME="${REPO_NAME}-${VERSION}.tar.gz"
 
@@ -59,12 +59,19 @@ if [ ! -f "${BREW_TAP_DIR}/${FORMULA_FILE}" ]; then
   exit 1
 fi
 
+# OSを判別してsedコマンドのオプションを設定
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  SED_INPLACE="sed -i ''"
+else
+  SED_INPLACE="sed -i"
+fi
+
 # URLとSHA256の更新
-sed -i '' "s|url \"https://github.com/${REPO_OWNER}/${REPO_NAME}/archive/refs/tags/.*\.tar\.gz\"|url \"https://github.com/${REPO_OWNER}/${REPO_NAME}/archive/refs/tags/${TAG}.tar.gz\"|g" "${BREW_TAP_DIR}/${FORMULA_FILE}"
-sed -i '' "s|sha256 \".*\"|sha256 \"${CHECKSUM}\"|g" "${BREW_TAP_DIR}/${FORMULA_FILE}"
+$SED_INPLACE "s|url \"https://github.com/${REPO_OWNER}/${REPO_NAME}/archive/refs/tags/.*\.tar\.gz\"|url \"https://github.com/${REPO_OWNER}/${REPO_NAME}/archive/refs/tags/${TAG}.tar.gz\"|g" "${BREW_TAP_DIR}/${FORMULA_FILE}"
+$SED_INPLACE "s|sha256 \".*\"|sha256 \"${CHECKSUM}\"|g" "${BREW_TAP_DIR}/${FORMULA_FILE}"
 
 # バージョン確認のテスト部分の更新
-sed -i '' "s|ppv version .*|ppv version ${VERSION}|g" "${BREW_TAP_DIR}/${FORMULA_FILE}"
+$SED_INPLACE "s|ppv version .*|ppv version ${VERSION}|g" "${BREW_TAP_DIR}/${FORMULA_FILE}"
 
 # 4. フォーミュラの変更をコミット
 echo "フォーミュラの変更をコミットしています..."
