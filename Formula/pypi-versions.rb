@@ -13,6 +13,6 @@ class PypiVersions < Formula
 
   test do
     # バージョン確認のテスト
-    assert_match "ppv version 1.1.4
+    assert_match "ppv version 1.1.5
   end
 end
