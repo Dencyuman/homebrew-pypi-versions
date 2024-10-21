@@ -54,6 +54,7 @@ ppv [コマンド] [フラグ] [引数]
 
 ```bash
 ppv versions [パッケージ...] [フラグ]
+ppv [パッケージ...] [フラグ] # versionsコマンドは省略可能
 ```
 
 `metadata`
@@ -85,6 +86,7 @@ ppv help
 ### パッケージのすべての利用可能なバージョンを表示
 ```bash
 ppv versions pandas
+ppv pandas
 ```
 #### 出力:
 
@@ -99,6 +101,7 @@ Available versions for pandas:
 ### 最新の安定バージョンのみを表示
 ```bash
 ppv versions pandas --latest
+ppv pandas -l
 ```
 #### 出力:
 
@@ -110,6 +113,7 @@ Latest version of pandas: 1.5.3
 ### プレリリースバージョンを含める
 ```bash
 ppv versions pandas --prerelease
+ppv pandas -p
 ```
 
 #### 出力:
@@ -128,6 +132,7 @@ Available versions for pandas:
 ### JSON形式でバージョンを出力
 ```bash
 ppv versions pandas --json
+ppv pandas -j
 ```
 #### 出力:
 
@@ -185,3 +190,5 @@ ppv deps pandas latest --json
 
 ## ライセンス
 このプロジェクトは MIT License のもとでライセンスされています。詳細については [LICENSE](../../LICENSE) ファイルをご覧ください。
+
+© 2024 [Dencyuman](https://github.com/Dencyuman)

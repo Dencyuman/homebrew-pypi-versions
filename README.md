@@ -53,6 +53,7 @@ Display available versions of specified PyPI packages.
 
 ```bash
 ppv versions [packages...] [flags]
+ppv [packages...] [flags] # The versions command can be omitted.
 ```
 
 `metadata`
@@ -84,6 +85,8 @@ ppv help
 ### Display All Available Versions of a Package
 ```bash
 ppv versions pandas
+ppv pandas
+
 ```
 #### Output:
 
@@ -98,6 +101,7 @@ Available versions for pandas:
 ### Display Only the Latest Stable Version
 ```bash
 ppv versions pandas --latest
+ppv pandas -l
 ```
 #### Output:
 
@@ -108,6 +112,7 @@ Latest version of pandas: 1.5.3
 ### Include Pre-release Versions
 ```bash
 ppv versions pandas --prerelease
+ppv pandas -p
 ```
 #### Output:
 
@@ -125,6 +130,7 @@ Available versions for pandas:
 ### Output Versions in JSON Format
 ```bash
 ppv versions pandas --json
+ppv pandas -j
 ```
 #### Output:
 
@@ -195,4 +201,5 @@ ppv deps pandas latest --json
 
 ## License
 This project is licensed under the [MIT License](../../LICENSE).
+
 © 2024 [Dencyuman](https://github.com/Dencyuman)
