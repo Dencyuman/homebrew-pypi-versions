@@ -37,32 +37,20 @@ if git rev-parse "$TAG" >/dev/null 2>&1; then
   exit 1
 fi
 
-# 1. タグの作成
-echo "Gitタグ ${TAG} を作成しています..."
-git tag "$TAG"
-
-# タグ作成の確認
-if git rev-parse "$TAG" >/dev/null 2>&1; then
-  echo "タグ '${TAG}' が正常に作成されました。"
-else
-  echo "エラー: タグ '${TAG}' の作成に失敗しました。"
-  exit 1
-fi
-
-# 2. ソースコードのダウンロード
+# 1. ソースコードのダウンロード
 ARCHIVE_URL="https://github.com/${REPO_OWNER}/${REPO_NAME}/archive/refs/tags/${TAG}.tar.gz"
 ARCHIVE_NAME="${REPO_NAME}-${VERSION}.tar.gz"
 
 echo "ソースアーカイブをダウンロードしています: ${ARCHIVE_URL}"
 curl -L "$ARCHIVE_URL" -o "$ARCHIVE_NAME"
 
-# 3. SHA256チェックサムの計算
+# 2. SHA256チェックサムの計算
 echo "SHA256チェックサムを計算しています..."
 CHECKSUM=$(shasum -a 256 "$ARCHIVE_NAME" | awk '{print $1}')
 
 echo "SHA256チェックサム: $CHECKSUM"
 
-# 4. Homebrewフォーミュラの更新
+# 3. Homebrewフォーミュラの更新
 echo "Homebrewフォーミュラを更新しています: ${FORMULA_FILE}"
 
 # フォーミュラファイルが存在することを確認
@@ -78,7 +66,7 @@ sed -i '' "s|sha256 \".*\"|sha256 \"${CHECKSUM}\"|g" "${BREW_TAP_DIR}/${FORMULA_
 # バージョン確認のテスト部分の更新
 sed -i '' "s|ppv version .*|ppv version ${VERSION}|g" "${BREW_TAP_DIR}/${FORMULA_FILE}"
 
-# 5. フォーミュラの変更をコミット
+# 4. フォーミュラの変更をコミット
 echo "フォーミュラの変更をコミットしています..."
 cd "$BREW_TAP_DIR"
 
@@ -87,14 +75,29 @@ git commit -m "pypi-versions ${VERSION} リリース: URLとSHA256を更新"
 
 echo "フォーミュラの変更がコミットされました。"
 
+# 5. Gitタグの作成
+echo "Gitタグ ${TAG} を作成しています..."
+git tag "$TAG"
+
+# タグ作成の確認
+if git rev-parse "$TAG" >/dev/null 2>&1; then
+  echo "タグ '${TAG}' が正常に作成されました。"
+else
+  echo "エラー: タグ '${TAG}' の作成に失敗しました。"
+  exit 1
+fi
+
 # プッシュは手動で行うため、スクリプトはここで終了
-echo "リモートリポジトリにプッシュするには、以下のコマンドを実行してください："
+echo "リモートリポジトリに変更をプッシュするには、以下のコマンドを実行してください："
 echo "  git push origin ${CURRENT_BRANCH}"
 echo "  git push origin ${TAG}"
 
 # クリーンアップ
 rm "$ARCHIVE_NAME"
 
-echo "リリースプロセスのタグ作成とフォーミュラの更新が完了しました。"
+echo "リリースプロセスのフォーミュラ更新とタグ作成が完了しました。"
+echo "次に、以下のコマンドを実行してリモートにプッシュしてください："
+echo "  git push origin ${CURRENT_BRANCH}"
+echo "  git push origin ${TAG}"
 
 exit 0
