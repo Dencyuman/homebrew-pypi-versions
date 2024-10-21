@@ -9,8 +9,12 @@ type PackageInfo struct {
 	Name         string   `json:"name"`
 	Version      string   `json:"version"`
 	Summary      string   `json:"summary"`
-	HomePage     string   `json:"home_page"`
+	Description  string   `json:"description"`
+	Author       string   `json:"author"`
+	AuthorEmail  string   `json:"author_email"`
 	License      string   `json:"license"`
+	HomePage     string   `json:"home_page"`
+	ProjectURL   string   `json:"project_url"`
 	RequiresDist []string `json:"requires_dist"`
 }
 

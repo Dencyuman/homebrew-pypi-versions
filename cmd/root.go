@@ -14,27 +14,30 @@ import (
 
 var rootCmd = &cobra.Command{
 	Use:   "ppv [packages...]",
-	Short: "PyPI Versions is a CLI tool to fetch package versions from PyPI.",
+	Short: "PyPI Versions is a CLI tool to fetch package versions and metadata from PyPI.",
 	Long: `ppv is a command-line interface tool that allows you to fetch
-available versions of specified Python packages from PyPI.`,
+available versions and detailed metadata of specified Python packages from PyPI.`,
 	Example: `  # Display all available versions of pandas
-  ppv pandas
+    ppv pandas
 
-  # Display only the latest stable version of pandas
-  ppv pandas --latest
+    # Display only the latest stable version of pandas
+    ppv pandas --latest
 
-  # Include pre-release versions when displaying all versions
-  ppv pandas --prerelease
+    # Include pre-release versions when displaying all versions
+    ppv pandas --prerelease
 
-  # Display the latest stable version in JSON format
-  ppv pandas --latest --json
+    # Display the latest stable version in JSON format
+    ppv pandas --latest --json
 
-  # Display available versions for multiple packages
-  ppv pandas requests numpy`,
+    # Display available versions for multiple packages
+    ppv pandas requests numpy
+
+    # Display metadata of pandas
+    ppv metadata pandas`,
 	Args: cobra.ArbitraryArgs, // Allow arbitrary arguments
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) > 0 {
-			// If arguments are provided, treat as versions command
+			// If arguments are provided and no subcommand is used, treat as versions command
 			runVersions(cmd, args)
 		} else {
 			// Otherwise, show help
