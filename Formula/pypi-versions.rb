@@ -10,4 +10,9 @@ class PypiVersions < Formula
   def install
     system "go", "build", *std_go_args(ldflags: "-s -w")
   end
+
+  test do
+    # バージョン確認のテスト
+    assert_match "ppv version 1.1.12", shell_output("#{bin}/ppv --version")
+  end
 end
