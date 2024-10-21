@@ -14,6 +14,6 @@ class Ppv < Formula
 
   test do
     # バージョン確認のテスト
-    assert_match "ppv version 1.1.0", shell_output("#{bin}/ppv --version")
+    assert_match "ppv version 1.1.2", shell_output("#{bin}/ppv --version")
   end
 end
