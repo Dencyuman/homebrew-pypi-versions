@@ -93,10 +93,11 @@ jobs:
         run: |
           echo "現在のディレクトリ内のファイル一覧:"
           ls -la
-          echo " 'installer' ディレクトリ内のファイル一覧（存在する場合）:"
+          echo "'installer' ディレクトリ内のファイル一覧（存在する場合）:"
           if [ -d "./installer" ]; then ls -la ./installer; fi
 
       - name: Create Release
+        id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -105,4 +106,13 @@ jobs:
           release_name: Release ${{ github.ref_name }}
           draft: false
           prerelease: false
-          files: ./pypi-versions-setup.exe
+
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./pypi-versions-setup.exe
+          asset_name: pypi-versions-setup.exe
+          asset_content_type: application/octet-stream
