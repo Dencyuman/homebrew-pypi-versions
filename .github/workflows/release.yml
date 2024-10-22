@@ -4,7 +4,7 @@ on:
   push:
     tags:
       - 'v*'
-  workflow_dispatch:
+  workflow_dispatch:  # 手動トリガーの追加
 
 jobs:
   build:
@@ -28,23 +28,40 @@ jobs:
       - name: Verify Inno Setup Installation
         shell: pwsh
         run: |
-          if (Test-Path "C:\Program Files (x86)\Inno Setup 6\ISCC.exe") {
-            Write-Output "ISCC.exe exists."
+          $isccPath = "C:\Program Files (x86)\Inno Setup 6\ISCC.exe"
+          if (Test-Path $isccPath) {
+            Write-Output "ISCC.exe exists at $isccPath."
           } else {
-            Write-Error "ISCC.exe does not exist."
+            Write-Error "ISCC.exe does not exist at $isccPath."
+          }
+
+      - name: Check installer.iss Exists
+        shell: pwsh
+        run: |
+          if (Test-Path ./installer.iss) {
+            Write-Output "installer.iss exists."
+          } else {
+            Write-Error "installer.iss does not exist in the current directory."
           }
 
       - name: Create Installer
         shell: pwsh
         run: |
-          & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" installer.iss
+          & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" installer.iss | Tee-Object -FilePath iscc.log
+
+      - name: Upload ISCC log
+        uses: actions/upload-artifact@v3
+        with:
+          name: iscc-log
+          path: iscc.log
 
       - name: List files after Create Installer
+        shell: pwsh
         run: |
-          echo "Listing files in the current directory after Create Installer:"
-          ls -la
-          echo "Listing all files recursively:"
-          ls -R
+          Write-Output "Listing files in the current directory after Create Installer:"
+          Get-ChildItem -Force
+          Write-Output "Listing all files recursively:"
+          Get-ChildItem -Recurse -Force
 
       - name: Verify Installer Exists
         shell: pwsh
@@ -60,7 +77,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: installer
-          path: ./pypi-versions-setup.exe  # Listステップで確認したパスに合わせて調整
+          path: ./pypi-versions-setup.exe
 
   release:
     runs-on: ubuntu-latest
@@ -88,4 +105,4 @@ jobs:
           release_name: Release ${{ github.ref }}
           draft: false
           prerelease: false
-          files: installer/pypi-versions-setup.exe  # Listステップの出力に基づき調整
+          files: installer/pypi-versions-setup.exe
