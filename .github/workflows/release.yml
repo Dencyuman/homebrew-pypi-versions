@@ -4,7 +4,7 @@ on:
   push:
     tags:
       - 'v*'
-  workflow_dispatch:  # 手動トリガーの追加
+  workflow_dispatch:
 
 jobs:
   build:
@@ -30,6 +30,16 @@ jobs:
         run: |
           & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" installer.iss
 
+      - name: Verify Installer Exists
+        shell: pwsh
+        run: |
+          if (Test-Path ./pypi-versions-setup.exe) {
+            Write-Output "Installer exists."
+            Get-ChildItem -Path . -Filter pypi-versions-setup.exe
+          } else {
+            Write-Error "Installer pypi-versions-setup.exe does not exist."
+          }
+
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
@@ -46,6 +56,13 @@ jobs:
         with:
           name: installer
 
+      - name: List downloaded artifacts
+        run: |
+          echo "Listing files in the current directory:"
+          ls -la
+          echo "Listing files in the 'installer' directory (if exists):"
+          if [ -d "./installer" ]; then ls -la ./installer; fi
+
       - name: Create Release
         uses: actions/create-release@v1
         env:
@@ -55,4 +72,4 @@ jobs:
           release_name: Release ${{ github.ref }}
           draft: false
           prerelease: false
-          files: pypi-versions-setup.exe
+          files: installer/pypi-versions-setup.exe
