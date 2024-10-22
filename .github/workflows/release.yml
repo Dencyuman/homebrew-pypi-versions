@@ -25,10 +25,26 @@ jobs:
       - name: Install Inno Setup
         run: choco install innosetup
 
+      - name: Verify Inno Setup Installation
+        shell: pwsh
+        run: |
+          if (Test-Path "C:\Program Files (x86)\Inno Setup 6\ISCC.exe") {
+            Write-Output "ISCC.exe exists."
+          } else {
+            Write-Error "ISCC.exe does not exist."
+          }
+
       - name: Create Installer
         shell: pwsh
         run: |
           & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" installer.iss
+
+      - name: List files after Create Installer
+        run: |
+          echo "Listing files in the current directory after Create Installer:"
+          ls -la
+          echo "Listing all files recursively:"
+          ls -R
 
       - name: Verify Installer Exists
         shell: pwsh
@@ -44,7 +60,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: installer
-          path: ./pypi-versions-setup.exe
+          path: ./pypi-versions-setup.exe  # Listステップで確認したパスに合わせて調整
 
   release:
     runs-on: ubuntu-latest
@@ -72,4 +88,4 @@ jobs:
           release_name: Release ${{ github.ref }}
           draft: false
           prerelease: false
-          files: installer/pypi-versions-setup.exe
+          files: installer/pypi-versions-setup.exe  # Listステップの出力に基づき調整
