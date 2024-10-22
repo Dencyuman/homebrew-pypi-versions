@@ -12,6 +12,12 @@ import (
 	"github.com/spf13/cobra"
 )
 
+// バージョン情報を定義
+var (
+	version = "v1.1.14"
+)
+
+// rootCmdはベースとなるコマンドです
 var rootCmd = &cobra.Command{
 	Use:   "ppv [packages...]",
 	Short: "PyPI Versions is a CLI tool to fetch package versions and metadata from PyPI.",
@@ -34,13 +40,19 @@ available versions and detailed metadata of specified Python packages from PyPI.
 
     # Display metadata of pandas
     ppv metadata pandas`,
-	Args: cobra.ArbitraryArgs, // Allow arbitrary arguments
+	Args: cobra.ArbitraryArgs, // 任意の引数を許可
 	Run: func(cmd *cobra.Command, args []string) {
+		// バージョンフラグが設定されている場合はバージョンを表示して終了
+		if showVersion {
+			fmt.Printf("PyPi-Versions(ppv): %s\n", version)
+			return
+		}
+
 		if len(args) > 0 {
-			// If arguments are provided and no subcommand is used, treat as versions command
+			// 引数が提供され、サブコマンドが使用されていない場合はversionsコマンドとして扱う
 			runVersions(cmd, args)
 		} else {
-			// Otherwise, show help
+			// それ以外の場合はヘルプを表示
 			cmd.Help()
 		}
 	},
@@ -51,6 +63,7 @@ var (
 	includePreRelease bool
 	showLatest        bool
 	outputJSON        bool
+	showVersion       bool // バージョン表示用フラグを追加
 )
 
 func Execute() {
@@ -61,13 +74,14 @@ func Execute() {
 }
 
 func init() {
-	// Define flags
+	// フラグを定義
 	rootCmd.Flags().BoolVarP(&includePreRelease, "prerelease", "p", false, "Include pre-release versions")
 	rootCmd.Flags().BoolVarP(&showLatest, "latest", "l", false, "Show only the latest stable version")
 	rootCmd.Flags().BoolVarP(&outputJSON, "json", "j", false, "Output in JSON format")
+	rootCmd.Flags().BoolVarP(&showVersion, "version", "v", false, "Show ppv version")
 }
 
-// runVersions handles the versions fetching logic
+// runVersionsはバージョン取得ロジックを処理します
 func runVersions(cmd *cobra.Command, args []string) {
 	for _, packageName := range args {
 		url := fmt.Sprintf("https://pypi.org/pypi/%s/json", packageName)
@@ -107,7 +121,7 @@ func runVersions(cmd *cobra.Command, args []string) {
 			continue
 		}
 
-		// Sort versions
+		// バージョンをソート
 		sort.Sort(semver.Collection(versions))
 
 		if showLatest {

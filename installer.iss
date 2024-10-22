@@ -1,6 +1,6 @@
 [Setup]
 AppName=pypi-versions
-AppVersion=1.1.13
+AppVersion=1.1.14
 DefaultDirName={pf}\pypi-versions
 DefaultGroupName=pypi-versions
 OutputDir=.
