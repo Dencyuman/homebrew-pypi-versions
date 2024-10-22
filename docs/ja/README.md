@@ -1,3 +1,10 @@
+<p align="center" dir="auto">
+    <a href="https://github.com/Dencyuman/homebrew-pypi-versions/blob/main/docs/ja/README.md">
+        <img style="max-width: 100%; margin-top: 4rem" src="../../assets/logo-padding.png" alt="pypi-versions logo">
+    </a>
+</p>
+
+
 # PyPI Versions (ppv)
 
 PyPI Versions (ppv) は、Python Package Index (PyPI) と連携する強力なコマンドラインインターフェース（CLI）ツールです。指定したPythonパッケージのバージョン、詳細なメタデータ、依存関係をターミナルから直接取得できます。

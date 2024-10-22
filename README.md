@@ -1,3 +1,9 @@
+<p align="center" dir="auto">
+    <a href="https://github.com/Dencyuman/homebrew-pypi-versions">
+        <img style="max-width: 100%; margin-top: 4rem" src="./assets/logo-padding.png" alt="pypi-versions logo">
+    </a>
+</p>
+
 # PyPI Versions (ppv)
 
 PyPI Versions (ppv) is a command-line interface (CLI) tool designed to interact with the Python Package Index (PyPI). It allows users to fetch package versions, detailed metadata, and dependencies of specified Python packages directly from the terminal.
