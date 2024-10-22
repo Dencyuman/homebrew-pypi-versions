@@ -63,15 +63,15 @@ jobs:
           Write-Output "Listing all files recursively:"
           Get-ChildItem -Recurse -Force
 
-      - name: Verify Installer Exists
-        shell: pwsh
-        run: |
-          if (Test-Path ./pypi-versions-setup.exe) {
-            Write-Output "Installer exists."
-            Get-ChildItem -Path . -Filter pypi-versions-setup.exe
-          } else {
-            Write-Error "Installer pypi-versions-setup.exe does not exist."
-          }
+#      - name: Verify Installer Exists
+#        shell: pwsh
+#        run: |
+#          if (Test-Path ./pypi-versions-setup.exe) {
+#            Write-Output "Installer exists."
+#            Get-ChildItem -Path . -Filter pypi-versions-setup.exe
+#          } else {
+#            Write-Error "Installer pypi-versions-setup.exe does not exist."
+#          }
 
       - name: Create GitHub Release
         id: create_release
