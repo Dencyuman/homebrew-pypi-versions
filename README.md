@@ -1,5 +1,5 @@
 <p align="center" dir="auto">
-    <a href="https://github.com/Dencyuman/homebrew-pypi-versions">
+    <a href="https://takotakocyumans-organization.gitbook.io/pypi-versions-docs/">
         <img style="max-width: 100%; margin-top: 4rem" src="./assets/logo-padding.png" alt="pypi-versions logo">
     </a>
 </p>
