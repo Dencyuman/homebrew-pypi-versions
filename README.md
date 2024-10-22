@@ -8,8 +8,11 @@
 
 PyPI Versions (ppv) is a command-line interface (CLI) tool designed to interact with the Python Package Index (PyPI). It allows users to fetch package versions, detailed metadata, and dependencies of specified Python packages directly from the terminal.
 
+## Other Language README
+- [日本語版README](./docs/ja/README.md)
+
 ## Docs
-- [日本語版ドキュメント](./docs/ja/README.md)
+- [PyPi-Versions Official Docs](https://takotakocyumans-organization.gitbook.io/pypi-versions-docs/)
 
 ## Features
 - **Fetch Available Versions**: Retrieve all available versions of one or more Python packages from PyPI.

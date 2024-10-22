@@ -9,8 +9,11 @@
 
 PyPI Versions (ppv) は、Python Package Index (PyPI) と連携する強力なコマンドラインインターフェース（CLI）ツールです。指定したPythonパッケージのバージョン、詳細なメタデータ、依存関係をターミナルから直接取得できます。
 
-## Docs
-- [English Docs](../../README.md)
+## 別言語README
+- [English README](../../README.md)
+
+## 公式ドキュメント
+- [PyPi-Versions Official Docs](https://takotakocyumans-organization.gitbook.io/pypi-versions-docs/)
 
 ## 特徴
 - **利用可能なバージョンの取得**: 一つ以上のPythonパッケージのすべてのバージョンをPyPIから取得。
